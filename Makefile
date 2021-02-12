@@ -17,9 +17,9 @@ checks:
 getdeps:
 	@mkdir -p ${GOPATH}/bin
 	@which golangci-lint 1>/dev/null || (echo "Installing golangci-lint" && curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(GOPATH)/bin v1.27.0)
-	@which ruleguard 1>/dev/null || (echo "Installing ruleguard" && GO111MODULE=off go get github.com/quasilyte/go-ruleguard/...)
-	@which msgp 1>/dev/null || (echo "Installing msgp" && GO111MODULE=off go get github.com/tinylib/msgp)
-	@which stringer 1>/dev/null || (echo "Installing stringer" && GO111MODULE=off go get golang.org/x/tools/cmd/stringer)
+	@which ruleguard 1>/dev/null || (echo "Installing ruleguard" && go get github.com/quasilyte/go-ruleguard/cmd/ruleguard@v0.2.1)
+	@which msgp 1>/dev/null || (echo "Installing msgp" && go get github.com/tinylib/msgp@v1.1.3)
+	@which stringer 1>/dev/null || (echo "Installing stringer" && go get golang.org/x/tools/cmd/stringer)
 
 crosscompile:
 	@(env bash $(PWD)/buildscripts/cross-compile.sh)
@@ -38,7 +38,7 @@ fmt:
 lint:
 	@echo "Running $@ check"
 	@GO111MODULE=on ${GOPATH}/bin/golangci-lint cache clean
-	@GO111MODULE=on ${GOPATH}/bin/golangci-lint run --timeout=5m --config ./.golangci.yml
+	@GO111MODULE=on ${GOPATH}/bin/golangci-lint run --timeout=10m --config ./.golangci.yml
 
 ruleguard:
 	@echo "Running $@ check"
@@ -57,7 +57,7 @@ test-race: verifiers build
 # Verify minio binary
 verify:
 	@echo "Verifying build with race"
-	@GO111MODULE=on CGO_ENABLED=1 go build -race -tags kqueue -trimpath --ldflags "$(LDFLAGS)" -o $(PWD)/minio 1>/dev/null
+	@GO111MODULE=on CGO_ENABLED=1 go build -tags kqueue -trimpath --ldflags "$(LDFLAGS)" -o $(PWD)/minio 1>/dev/null
 	@(env bash $(PWD)/buildscripts/verify-build.sh)
 
 # Verify healing of disks with minio binary
@@ -70,6 +70,16 @@ verify-healing:
 build: checks
 	@echo "Building minio binary to './minio'"
 	@GO111MODULE=on CGO_ENABLED=0 go build -tags kqueue -trimpath --ldflags "$(LDFLAGS)" -o $(PWD)/minio 1>/dev/null
+
+hotfix-vars:
+	$(eval LDFLAGS := $(shell MINIO_RELEASE="RELEASE" MINIO_HOTFIX="hotfix.$(shell git rev-parse --short HEAD)" go run buildscripts/gen-ldflags.go $(shell git describe --tags --abbrev=0 | \
+    sed 's#RELEASE\.\([0-9]\+\)-\([0-9]\+\)-\([0-9]\+\)T\([0-9]\+\)-\([0-9]\+\)-\([0-9]\+\)Z#\1-\2-\3T\4:\5:\6Z#')))
+	$(eval TAG := "minio/minio:$(shell git describe --tags --abbrev=0).hotfix.$(shell git rev-parse --short HEAD)")
+hotfix: hotfix-vars install
+
+docker-hotfix: hotfix checks
+	@echo "Building minio docker image '$(TAG)'"
+	@docker build -t $(TAG) . -f Dockerfile.dev
 
 docker: checks
 	@echo "Building minio docker image '$(TAG)'"
