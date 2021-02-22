@@ -62,7 +62,7 @@ const (
 	interNodeNamespace   = "internode"
 )
 
-func init() {
+func RegisterMetrics() {
 	prometheus.MustRegister(httpRequestsDuration)
 	prometheus.MustRegister(newMinioCollector())
 	prometheus.MustRegister(minioVersionInfo)
