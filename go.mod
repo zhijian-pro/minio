@@ -35,7 +35,7 @@ require (
 	github.com/gorilla/mux v1.8.0
 	github.com/hashicorp/vault/api v1.0.4
 	github.com/jcmturner/gokrb5/v8 v8.4.2
-	github.com/json-iterator/go v1.1.10
+	github.com/json-iterator/go v1.1.11
 	github.com/klauspost/compress v1.13.4
 	github.com/klauspost/cpuid v1.3.1
 	github.com/klauspost/pgzip v1.2.5
@@ -66,14 +66,13 @@ require (
 	github.com/philhofer/fwd v1.1.1
 	github.com/pierrec/lz4 v2.5.2+incompatible
 	github.com/pkg/errors v0.9.1
-	github.com/prometheus/client_golang v1.8.0
+	github.com/prometheus/client_golang v1.11.0
 	github.com/prometheus/client_model v0.2.0
 	github.com/prometheus/procfs v0.7.3
 	github.com/rjeczalik/notify v0.9.2
 	github.com/rs/cors v1.7.0
 	github.com/secure-io/sio-go v0.3.1
 	github.com/shirou/gopsutil v3.20.11+incompatible
-	github.com/sirupsen/logrus v1.7.0 // indirect
 	github.com/smartystreets/assertions v1.1.1 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/streadway/amqp v1.0.0
@@ -85,14 +84,12 @@ require (
 	github.com/willf/bloom v2.0.3+incompatible
 	github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c
 	github.com/xdg/stringprep v1.0.0 // indirect
-	go.etcd.io/etcd v0.0.0-20201125193152-8a03d2e9614b
 	go.opencensus.io v0.22.5 // indirect
-	go.uber.org/zap v1.13.0
 	golang.org/x/crypto v0.0.0-20220112180741-5e0467b6c7ce
 	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2
 	golang.org/x/sys v0.0.0-20220114195835-da31bd327af9
-	golang.org/x/tools v0.1.0 // indirect
 	google.golang.org/api v0.5.0
+	google.golang.org/grpc v1.26.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20200902074654-038fdea0a05b // indirect
 	gopkg.in/yaml.v2 v2.3.0
 	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776 // indirect
