@@ -57,9 +57,6 @@ require (
 	github.com/minio/sio v0.2.1
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/montanaflynn/stats v0.5.0
-	github.com/nats-io/nats-streaming-server v0.24.1 // indirect
-	github.com/nats-io/nats.go v1.13.1-0.20220121202836-972a071d373d
-	github.com/nats-io/stan.go v0.10.2
 	github.com/ncw/directio v1.0.5
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/nsqio/go-nsq v1.0.8
@@ -88,6 +85,7 @@ require (
 	golang.org/x/crypto v0.0.0-20220112180741-5e0467b6c7ce
 	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2
 	golang.org/x/sys v0.0.0-20220114195835-da31bd327af9
+	golang.org/x/time v0.0.0-20211116232009-f0f3c7e86c11 // indirect
 	google.golang.org/api v0.5.0
 	google.golang.org/grpc v1.26.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20200902074654-038fdea0a05b // indirect
